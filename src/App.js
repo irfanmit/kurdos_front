@@ -1,24 +1,24 @@
-import logo from './logo.svg';
+import React, { Suspense, lazy } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
+import{ EmailProvider } from './context/context';
+
+const Signup = lazy(() => import('./pages/Signup'));
+const Home = lazy(() => import('./pages/Home'));
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <EmailProvider>
+    <Router>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route path="/" element={<Signup />} />
+          <Route path="/home" element={<Home />} />
+          {/* other routes here */}
+        </Routes>
+      </Suspense>
+    </Router>
+    </EmailProvider>
   );
 }
 
